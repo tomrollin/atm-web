@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class CustomerController {
     @RequestMapping("/customer")
     public String getCustomerPage(Model model){
-        ArrayList<String> customers = new ArrayList<>();
-        customers.add("Peter");
-        customers.add("Nancy");
-        customers.add("Rick");
+        ArrayList<Customer> customers = new ArrayList<>();
+        customers.add(new Customer(1,"Peter","p1001"));
+        customers.add(new Customer(2,"Nancy","p1002"));
+        customers.add(new Customer(3,"Rick","p1003"));
         model.addAttribute("allCustomers", customers);
         return "customer";
     }
