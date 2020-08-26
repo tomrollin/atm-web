@@ -1,29 +1,33 @@
 package th.go.rd.atm.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.ArrayList;
-import java.util.List;
+import th.go.rd.atm.model.Customer;
+import th.go.rd.atm.service.CustomerService;
 
 @Controller
+@RequestMapping("/customer")
 public class CustomerController {
-    private ArrayList<Customer> customers = new ArrayList<>();
+    private CustomerService customerService;
 
-    @GetMapping("/customer")
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @GetMapping
     public String getCustomerPage(Model model){
 
-        model.addAttribute("allCustomers", customers);
+        model.addAttribute("allCustomers", customerService.getCustomer());
         return "customer";
     }
-    @PostMapping("/customer")
+    @PostMapping
     public String registerCustomer(@ModelAttribute Customer customer, Model model){
-        customers.add(customer);
-        model.addAttribute("allCustomer",customers);
+        customerService.createCustomer(customer);
+        model.addAttribute("allCustomer",customerService.getCustomer());
         return "redirect:customer";
     }
 }
